@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPU Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="app">
+    <nav class="navbar" id="mainNavbar">
+      <div class="nav-brand">
+        <img src="/logo.png" alt="IPU Connect" class="logo-img">
+        <span>IPU Connect</span>
+      </div>
+      <div class="nav-center" id="navCenter">
+        <div class="search-container">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="text" id="globalSearch" placeholder="Search tickets..." autocomplete="off">
+          <div id="searchResults" class="search-results hidden"></div>
+        </div>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <div class="nav-actions">
+          <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+            <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="moon-icon hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+          <div class="notification-wrapper">
+            <button class="notification-btn" onclick="toggleNotifications()" title="Notifications">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+              <span id="notificationBadge" class="notification-badge hidden">0</span>
+            </button>
+            <div id="notificationPanel" class="notification-panel hidden">
+              <div class="notification-header">
+                <span>Notifications</span>
+                <button onclick="markAllNotificationsRead()">Mark all read</button>
+              </div>
+              <div id="notificationList" class="notification-list"></div>
+            </div>
+          </div>
+          <div class="profile-dropdown-wrapper">
+            <button class="profile-btn" onclick="toggleProfileDropdown()" id="profileBtn">
+              <div class="profile-avatar" id="profileAvatar"></div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+            <div id="profileDropdown" class="profile-dropdown hidden">
+              <div class="profile-dropdown-header" id="profileDropdownHeader"></div>
+              <div class="profile-dropdown-menu">
+                <button onclick="showProfileModal(); closeProfileDropdown();">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  Profile
+                </button>
+                <button onclick="showSettingsModal(); closeProfileDropdown();">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  Settings
+                </button>
+                <div class="dropdown-divider"></div>
+                <button onclick="handleLogout(); closeProfileDropdown();" class="logout-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div id="authSection" class="auth-section">
+        <div class="auth-wrapper">
+          <div class="auth-hero">
+            <h1>Campus Support Made Simple</h1>
+            <p>Submit and track your support requests easily. Get help from our dedicated team.</p>
+            <div class="auth-hero-features">
+              <div class="auth-hero-feature">
+                <span>1</span>
+                <span>Submit tickets in seconds</span>
+              </div>
+              <div class="auth-hero-feature">
+                <span>2</span>
+                <span>Track progress in real-time</span>
+              </div>
+              <div class="auth-hero-feature">
+                <span>3</span>
+                <span>Get quick responses</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-card">
+            <div class="auth-tabs">
+              <button class="tab-btn active" onclick="showTab('login')">Sign In</button>
+              <button class="tab-btn" onclick="showTab('register')">Sign Up</button>
+            </div>
+
+            <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+              <h2>Welcome back</h2>
+              <p class="subtitle">Sign in to access your dashboard</p>
+              <div class="form-group">
+                <label>Email address</label>
+                <input type="email" id="loginEmail" required placeholder="Email" autocomplete="email">
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <div class="password-input-wrapper">
+                  <input type="password" id="loginPassword" required placeholder="Enter your password" autocomplete="current-password">
+                  <button type="button" class="password-toggle" onclick="togglePasswordVisibility('loginPassword', this)">
+                    <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="eye-off-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                  </button>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+
+            <form id="registerForm" class="auth-form hidden" onsubmit="handleRegister(event)">
+              <h2>Create account</h2>
+              <p class="subtitle">Get started with your helpdesk account</p>
+              <div class="form-group">
+                <label>Full name</label>
+                <input type="text" id="registerName" required placeholder="John Doe" autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label>Email address</label>
+                <input type="email" id="registerEmail" required placeholder="Email" autocomplete="email">
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <div class="password-input-wrapper">
+                  <input type="password" id="registerPassword" required placeholder="Create a password" minlength="6" autocomplete="new-password">
+                  <button type="button" class="password-toggle" onclick="togglePasswordVisibility('registerPassword', this)">
+                    <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="eye-off-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                  </button>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="dashboardSection" class="dashboard-section hidden">
+        <div class="dashboard-header">
+          <h1 id="welcomeMsg">Dashboard</h1>
+          <button id="newTicketBtn" class="btn btn-secondary btn-sm" onclick="showNewTicketModal()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3v10M3 8h10"/>
+            </svg>
+            New Ticket
+          </button>
+        </div>
+
+        <div id="userStatusCards" class="status-summary-cards">
+          <div class="status-card status-open">
+            <div class="status-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <div class="status-card-info">
+              <span class="status-card-count" id="openCount">0</span>
+              <span class="status-card-label">Open</span>
+            </div>
+          </div>
+          <div class="status-card status-in-progress">
+            <div class="status-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/>
+              </svg>
+            </div>
+            <div class="status-card-info">
+              <span class="status-card-count" id="inProgressCount">0</span>
+              <span class="status-card-label">In Progress</span>
+            </div>
+          </div>
+          <div class="status-card status-resolved">
+            <div class="status-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="status-card-info">
+              <span class="status-card-count" id="resolvedCount">0</span>
+              <span class="status-card-label">Resolved</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="adminStats" class="stats-grid hidden"></div>
+
+        <div class="tickets-section">
+          <div class="tickets-header">
+            <h2>Support Tickets</h2>
+            <div class="filter-bar">
+              <select id="statusFilter" onchange="loadTickets()">
+                <option value="">All Status</option>
+                <option value="open">Open</option>
+                <option value="in_progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+                <option value="closed">Closed</option>
+              </select>
+              <select id="sortFilter" onchange="loadTickets()">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="sla">SLA Deadline</option>
+              </select>
+            </div>
+          </div>
+          <div id="ticketsList" class="tickets-list"></div>
+        </div>
+      </div>
+    </main>
+
+    <div id="ticketModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>New Support Ticket</h2>
+          <button class="close-btn" onclick="closeModal('ticketModal')">&times;</button>
+        </div>
+        <form id="ticketForm" onsubmit="handleSubmitTicket(event)">
+          <div class="form-group">
+            <label>Category</label>
+            <select id="ticketCategory" required>
+              <option value="">Select a category</option>
+              <option value="IT Support">IT Support</option>
+              <option value="Library">Library</option>
+              <option value="Facilities">Facilities</option>
+              <option value="Academic">Academic</option>
+              <option value="Financial Aid">Financial Aid</option>
+              <option value="Housing">Housing</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group urgent-toggle-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="ticketUrgent">
+              <span class="toggle-text">Mark as Urgent</span>
+              <span class="urgent-hint">(4-hour response time for critical issues)</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" id="ticketSubject" required placeholder="Brief description of your issue">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="ticketDescription" required rows="4" placeholder="Provide details about your issue..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Ticket</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="ticketDetailModal" class="modal hidden">
+      <div class="modal-content modal-lg">
+        <div class="modal-header">
+          <h2>Ticket Details</h2>
+          <button class="close-btn" onclick="closeModal('ticketDetailModal')">&times;</button>
+        </div>
+        <div id="ticketDetailContent"></div>
+      </div>
+    </div>
+
+    <div id="profileModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>My Profile</h2>
+          <button class="close-btn" onclick="closeModal('profileModal')">&times;</button>
+        </div>
+        <div class="profile-content">
+          <form id="profileForm" class="profile-form" onsubmit="handleUpdateProfile(event)">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="profileName" required placeholder="Your name">
+            </div>
+            <div class="form-group" id="schoolFieldGroup">
+              <label>School / College</label>
+              <input type="text" id="profileSchool" placeholder="e.g., School of Engineering">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="profileEmail" disabled class="input-disabled">
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Settings</h2>
+          <button class="close-btn" onclick="closeModal('settingsModal')">&times;</button>
+        </div>
+        <div class="settings-content">
+          <h3 class="settings-section-title">Change Password</h3>
+          <form id="passwordForm" class="profile-form" onsubmit="handleChangePassword(event)">
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" id="currentPassword" required placeholder="Enter current password" autocomplete="current-password">
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" id="newPassword" required placeholder="Enter new password" minlength="6" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" id="confirmPassword" required placeholder="Confirm new password" minlength="6" autocomplete="new-password">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="modal hidden">
+      <div class="modal-content modal-sm">
+        <div class="modal-header">
+          <h2>Delete Ticket</h2>
+          <button class="close-btn" onclick="closeModal('deleteConfirmModal')">&times;</button>
+        </div>
+        <div class="delete-confirm-content">
+          <p>Are you sure you want to delete this ticket? This action cannot be undone.</p>
+          <div class="delete-confirm-actions">
+            <button class="btn btn-secondary" onclick="closeModal('deleteConfirmModal')">Cancel</button>
+            <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDeleteTicket()">Delete Ticket</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
