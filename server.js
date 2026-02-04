@@ -550,7 +550,7 @@ app.get('/api/tickets/:id', requireAuth, async (req, res) => {
   }
 });
 
-// Delete ticket (users can only delete their own non-resolved/closed tickets)
+// Delete ticket (users can only delete their own tickets)
 app.delete('/api/tickets/:id', requireAuth, async (req, res) => {
   try {
     const ticketId = req.params.id;
@@ -570,11 +570,6 @@ app.delete('/api/tickets/:id', requireAuth, async (req, res) => {
     // Only allow users to delete their own tickets (admins can delete any)
     if (req.session.role !== 'admin' && ticket.user_id !== req.session.userId) {
       return res.status(403).json({ error: 'You can only delete your own tickets' });
-    }
-    
-    // Users cannot delete resolved or closed tickets
-    if (req.session.role !== 'admin' && (ticket.status === 'resolved' || ticket.status === 'closed')) {
-      return res.status(400).json({ error: 'Cannot delete resolved or closed tickets' });
     }
     
     // Delete ticket (cascades to responses and notifications)
