@@ -48,6 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
   setupModalOutsideClick();
   setupGlobalSearch();
   setupDropdownClose();
+  const registerTab = document.querySelector(".auth-tabs .tab-btn[onclick*=\"register\"]");
+  if (registerTab) {
+    registerTab.textContent = 'Register';
+  }
 });
 
 async function checkAuth() {
