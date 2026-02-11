@@ -48,6 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
   setupModalOutsideClick();
   setupGlobalSearch();
   setupDropdownClose();
+  const registerTab = document.querySelector(".auth-tabs .tab-btn[onclick*=\"register\"]");
+  if (registerTab) {
+    registerTab.textContent = 'Register';
+  }
 });
 
 async function checkAuth() {
@@ -248,7 +252,7 @@ async function handleLogout() {
 }
 
 function getInitials(name) {
-  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  return (name || '').trim().charAt(0).toUpperCase();
 }
 
 function showDashboard() {

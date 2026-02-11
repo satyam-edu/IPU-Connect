@@ -51,11 +51,8 @@
             </div>
           </div>
           <div class="profile-dropdown-wrapper">
-            <button class="profile-btn" onclick="toggleProfileDropdown()" id="profileBtn">
+            <button class="profile-btn" onclick="toggleProfileDropdown()" id="profileBtn" aria-label="Open profile menu">
               <div class="profile-avatar" id="profileAvatar"></div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="m6 9 6 6 6-6"/>
-              </svg>
             </button>
             <div id="profileDropdown" class="profile-dropdown hidden">
               <div class="profile-dropdown-header" id="profileDropdownHeader"></div>
@@ -105,7 +102,7 @@
           <div class="auth-card">
             <div class="auth-tabs">
               <button class="tab-btn active" onclick="showTab('login')">Sign In</button>
-              <button class="tab-btn" onclick="showTab('register')">Sign Up</button>
+              <button class="tab-btn" onclick="showTab('register')">Register</button>
             </div>
 
             <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
