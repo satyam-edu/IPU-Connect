@@ -16,7 +16,7 @@ IPU-Connect is a web-based complaint management system designed for university s
 - MySQL / MongoDB (update as applicable)
 
 ## Live Demo
-https://ipu-connect.vercel.app
+https://ipu-connect.onrender.com/
 
 ## How to Run Locally
 1. Clone the repo  
