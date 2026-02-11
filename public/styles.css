@@ -1565,33 +1565,37 @@ body.auth-page .navbar {
 }
 
 .profile-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: 999px;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem 0.375rem 0.375rem;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.2s;
 }
 
 .profile-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+  background: var(--gray-100);
+  border-color: var(--gray-300);
 }
 
 .profile-btn .profile-avatar {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  border-radius: 50%;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+}
+
+.profile-btn svg {
+  color: var(--gray-400);
 }
 
 .profile-dropdown {
@@ -1804,11 +1808,13 @@ body.dark-mode .notification-item.unread {
 }
 
 body.dark-mode .profile-btn {
-  box-shadow: none;
+  background: #334155;
+  border-color: #475569;
 }
 
 body.dark-mode .profile-btn:hover {
-  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.2);
+  background: #475569;
+  border-color: #64748b;
 }
 
 body.dark-mode .profile-dropdown {

@@ -252,7 +252,7 @@ async function handleLogout() {
 }
 
 function getInitials(name) {
-  return (name || '').trim().charAt(0).toUpperCase();
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 }
 
 function showDashboard() {
